@@ -1,0 +1,22 @@
+<html>
+	<head>
+		<link rel="stylesheet" type="text/css" href="shadowbox/shadowbox.css">
+		<script type="text/javascript" src="shadowbox/shadowbox.js"></script>
+		<script type="text/javascript">
+			function setup()
+			{
+				Shadowbox.setup("a.test-gallery", {
+					gallery:        "test",
+					continuous:     true,
+					counterType:    "skip"
+				});
+			}
+			
+			Shadowbox.init({},setup);
+		</script>
+	</head>
+	<body>
+		<p><a class="test-gallery" href="pics/test.jpg" title="My Image Title">My Image</a></p>
+		<p><a class="test-gallery" href="pics/test2.jpg" title="My Image Title 2">My Image 2</a></p>
+	</body>
+</html>

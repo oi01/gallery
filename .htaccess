@@ -1,0 +1,3 @@
+order allow,deny
+deny from 69.
+allow from all

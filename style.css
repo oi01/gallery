@@ -1,0 +1,109 @@
+/************************************************************************************************
+ * oi01.de - Gallery
+ *
+ * Description:
+ * - Cascading Style Sheet
+ ************************************************************************************************/
+
+/* Image border */
+img  {
+  border: 1px solid #000000;
+}
+
+/* Normal link */
+a:link {
+  color: #000000;
+  text-decoration: none;
+}
+
+/* Visited link */
+a:visited {
+  color: #000000;
+  text-decoration: none;
+}
+
+/* Hovered link */
+a:hover {
+  color: #000080;
+  text-decoration: none;
+}
+
+/* body */
+body, td {
+  font: 10px Verdana;
+}
+
+/* bread crumb */
+h1 {
+  font: 12px Verdana;
+  color: #ffffff;
+  background-color: #c0c0c0;
+  border: 1px solid #808080;
+  display: block;
+}
+
+/* tags */
+h2 {
+  font: 10px Verdana;
+  color: #ffffff;
+  background-color: #e0e0e0;
+  border: 1px solid #808080;
+  display: block;
+  text-align:center;
+}
+
+/* table content */
+td {
+  text-align: center;
+}
+
+/* code */
+code {
+  color: #00ff00;
+  background-color: #000000;
+  border: 1px solid #808080;
+  display: block;
+  font: 12px;
+}
+
+.pics {
+  display: block;
+  border: 1px solid #c0c0c0;
+  border-spacing: 16px;
+  text-align: center;
+}
+
+/* footer */
+a.footer {
+  clear: left;
+  text-align: center;
+  color: #e0e0e0;
+  font: 10px Verdana;
+}
+
+.footer {
+  clear: left;
+  text-align: center;
+  color: #e0e0e0;
+  font: 10px Verdana;
+}
+
+/* Setup title */
+.title {
+  color: #ffffff;
+  background-color: #808080;
+}
+
+/* Info text */
+.info {
+  color: #000000;
+  background-color: #e0e0e0;
+  border: 1px solid #808080;
+  display: block;
+}
+
+/* Setup description */
+.desc {
+  color: #000000;
+  background-color: #e0e0e0;
+}
