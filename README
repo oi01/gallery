@@ -12,3 +12,6 @@ Features:
 - Tags are also cached as HTML files
 - Simple global configuration file
 - Simple gallery configuration files if needed
+
+WARNING:
+- The current branch has not yet been tested!!!
