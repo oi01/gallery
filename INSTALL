@@ -1,0 +1,39 @@
+=== oi01 Gallery
+
+--- Installation Guide
+
+The gallery contains two parts: server and client.
+
+
+
+--- Server
+
+The files in the server directory is dedicated for your webserver. Simply upload these files to your server and enter the URL in your browser.
+
+An installation site is shown that lets you change some settings. After that the initialization process is executed including the following steps:
+
+- Creating user/pass for the tools directory. It is used to update or reset the gallery.
+- Removing further installation files to protect unauthorized resets
+
+Finally a complete update of available galleries is done, creating thumbnails of the images and writing index and tag files.
+
+In the end your new gallery is ready to visit.
+
+
+
+--- Client
+
+Required tool: ImageMagick > http://www.imagemagick.org
+
+For now only a registry file for MS Windows is available. It contains entries to add new items in the context menu of the Windows File Explorer.
+
+IMPORTANT: PLEASE CHECK THE REGISTRY FILE BEFORE EXECUTING!!
+
+Unfortunately Picasa relinked the class "jpegfile", so the own Google class needs to be modified. Please check your system if this is also the case.
+
+Now you have two new items in your context menu.
+
+"oi01.de - Gallery: Add" adds a new command in a batch file of the selected images to execute the additional tool "imagemagick".
+It resizes the pictures and adds the URL oi01.de in the lower right corner. Please feel free to modify the text for your purpose.
+
+"oi01.de - Gallery: Exe" executes the current list of commands.
