@@ -66,6 +66,7 @@ code {
   font: 12px;
 }
 
+/* pictures */
 .pics {
   display: block;
   border: 1px solid #c0c0c0;
@@ -81,7 +82,7 @@ a.footer {
   font: 10px Verdana;
 }
 
-.footer {
+p.footer {
   clear: left;
   text-align: center;
   color: #e0e0e0;
