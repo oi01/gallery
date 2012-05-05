@@ -8,6 +8,8 @@ The gallery contains two parts: server and client.
 
 --- Server
 
+1) Installation
+
 The files in the server directory is dedicated for your webserver. Simply upload these files to your server and enter the URL in your browser.
 
 An installation site is shown that lets you change some settings. After that the initialization process is executed including the following steps:
@@ -19,6 +21,22 @@ Finally a complete update of available galleries is done, creating thumbnails of
 
 In the end your new gallery is ready to visit.
 
+
+2) Update and reset
+
+Upload all of your new pictures into the directory "pics". Then start your browser and open the root path of the gallery with the addition "?update".
+
+For this action you are asked to enter your user/pass written during the installation process. Then all index as well as tag files will be rebuilt,
+all images are scanned and optionally resized.
+
+Another addition is "?reset" which will also remove all present thumbnails.
+
+
+3) Structure
+
+Each gallery may have the file "gallery.conf" with attributes like whether it is hidden or which image shall be shown in the index.
+
+Furthermore you can save a file called "info.txt". The text is shown in the info block above the images and can be used to say some words about it.
 
 
 --- Client
