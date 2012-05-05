@@ -1,10 +1,10 @@
 <html>
 	<head>
-		<title>oi01.de - Gallery</title>
+		<title>oi01 - Gallery</title>
 		<link rel="stylesheet" type="text/css" href="style.css">
 	</head>
 	<body>
-	    <h1>oi01.de Gallery - Setup</h1>
+	    <h1>oi01 - Gallery: Setup</h1>
 		
 		<form action="install.php" method="post">
 			<table width="100%">

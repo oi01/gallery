@@ -25,7 +25,7 @@
   $thumb_height=120;
   $is_debug=true;
   $is_tags=true;
-  $text_title="oi01.de - Gallery";
+  $text_title="oi01 - Gallery";
   $text_home="Home";
   
   // Load optional global configuration file

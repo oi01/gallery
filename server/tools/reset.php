@@ -1,7 +1,7 @@
 <?
 
   /************************************************************************************************
-   * oi01.de - Gallery
+   * oi01 - Gallery
    *
    * Description:
    * - Resetting gallery: removing index files

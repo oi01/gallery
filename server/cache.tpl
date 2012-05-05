@@ -1,6 +1,6 @@
 <html>
 	<head>
-	    <title>oi01.de - Gallery</title>
+	    <title>oi01 - Gallery</title>
 	    <link rel="stylesheet" type="text/css" href="../style.css">
 		<link rel="stylesheet" type="text/css" href="../shadowbox/shadowbox.css">
 		<script type="text/javascript" src="../shadowbox/shadowbox.js"></script>
