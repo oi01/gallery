@@ -6,6 +6,6 @@
 	<body>
 	    <h1><a href="../">%home%</a></h1>
 	    %index%
-		<p class="footer"><a class="footer" href="http://www.oi01.de/" target="_blank">oi01-Gallery</a></p>
+		<p class="footer"><a class="footer" href="http://www.oi01.de/gallery" target="_blank">oi01-Gallery</a></p>
 	</body>
 </html>
