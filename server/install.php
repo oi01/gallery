@@ -12,73 +12,79 @@
    **/
    include_once("conf.php");
 
+  // Common functions
+  function resultExe($res,$text)
+  {
+    global $icon_ok;
+    global $icon_fail;
+
+    $icon = ($res) ? $icon_ok : $icon_fail;
+    print("<p><img src=\"".$icon."\" /> ".$text."</p>\n");
+  }
+
   /**
    * Check for a POST
    **/
-  $state=1;
   if (isset($_POST["user"]) && isset($_POST["pass"]))
   {
     /**
      * Create .htaccess
      **/
-    print("<code>\n");
-    print("Apply access...<br />\n");
-
     // Create tool directory
     $dir_tools=dirname($_SERVER["SCRIPT_FILENAME"])."/tools/";
 
     // Create .htaccess
-    print("- Create .htaccess: ".$dir_tools.".htaccess<br />\n");
+    $file_htaccess=$dir_tools.".htaccess";
 
     $buffer="AuthType Basic\n";
     $buffer.="AuthName \"Access request\"\n";   
-    $buffer.="AuthUserFile ".$dir_tools.".htpasswd\n";
+    $buffer.="AuthUserFile ".$file_htaccess."\n";
     $buffer.="require valid-user\n";
 
     // Save file
-    $i=file_put_contents($dir_tools.".htaccess",$buffer);
-    if ($i===0) $state=0;
+    print("<h1>Installing...</h1>\n");
+    $i=file_put_contents($file_htaccess,$buffer);
+    resultExe(($i>0),"Creating .htaccess: ".$file_htaccess);
+
 
     /**
      * Create .htpasswd
      **/
-    print("- Create .htpasswd: ".$dir_tools.".htpasswd<br />\n");
+    $file_htpasswd=$dir_tools.".htpasswd";
 
     // Add user and encrypt password
     $buffer=$_POST["user"].":".crypt($_POST["pass"], base64_encode($_POST["pass"]));
 
     // Save file
-    $i=file_put_contents($dir_tools.".htpasswd",$buffer);
-    if ($i===0) $state=0;
+    $i=file_put_contents($file_htpasswd,$buffer);
+    resultExe(($i>0),"Creating .htpasswd: ".$file_htpasswd);
 
     /**
      * Create further directories
      **/
     // Create index directory
-    print("Creating index directory");
-    mkdir($dir_cache,0755);
+    $i=mkdir($dir_cache,0755);
+    resultExe($i,"Creating index directory: ".$dir_cache);
 
     // Create tag directory
-    print("Creating tags directory");
-    mkdir($dir_tags,0755);
+    $i=mkdir($dir_tags,0755);
+    resultExe($i,"Creating tags directory: ".$dir_tags);
 
     // Create thumbs directory
-    print("Creating thumbs directory");
-    mkdir($dir_thumbs,0755);
+    $i=mkdir($dir_thumbs,0755);
+    resultExe($i,"Creating thumbs directory: ".$dir_thumbs);
 
     /**
      * Remove installation files
      **/
-    print("- Removing: ".$file_template."<br />\n");
-    unlink($file_template);
+    $i=unlink($file_template);
+    resultExe($i,"Removing install template: ".$file_template);
 
-    print("- Removing: ".$_SERVER["SCRIPT_FILENAME"]."<br />\n");
-    unlink($_SERVER["SCRIPT_FILENAME"]);
+    $i=unlink($_SERVER["SCRIPT_FILENAME"]);
+    resultExe($i,"Removing install script: ".$_SERVER["SCRIPT_FILENAME"]);
 
     // Finish
-    print("Done...<br />\n<br />\n");
-    print("</code>\n");
-    print("<a href=\".\">Next...</a>\n");
+    print("<p><a href=\".\">Next...</a></p>\n");
     exit();
   }
 

@@ -12,6 +12,16 @@
    */
   include_once("../conf.php");
 
+  // Common functions
+  function resultExe($res,$text)
+  {
+    global $icon_ok;
+    global $icon_fail;
+
+    $icon = ($res) ? $icon_ok : $icon_fail;
+    print("<p><img src=\"../".$icon."\" /> ".$text."</p>\n");
+  }
+
   /**
    * Remove directory recursively
    **/   
@@ -32,13 +42,13 @@
         else
 		{
 		    // Remove file
-		    print("- Removing file: ".$file."<br />\n");
+		    print("<!-- Removing file: ".$file." -->\n");
             if (!unlink($file)) exit();
 		}
     }
 	
 	// Remove directory
-	print("- Removing directory: ".$dir."<br />\n");
+	print("<!-- Removing directory: ".$dir." -->\n");
     rmdir($dir);
   }
 
@@ -46,34 +56,33 @@
    * Remove files
    **/
   // Log
-  print("<code>\n");
-  print("Resetting gallery...<br />\n");
+  print("<h1>Resetting...</h1>\n");
   
   // Remove index (cached)
-  print("- Removing index: ../".$file_index."<br />\n");
-  unlink("../".$file_index);
+  $file="../".$file_index;
+  $i=unlink($file);
+  resultExe($i,"Removing index file: ".$file);
   
   // Remove tags
-  rrmdir("../".$dir_tags);
+  $dir="../".$dir_tags;
+  rrmdir($dir);
 
   // Recreate tag directory again
-  print("- Create directory: ../".$dir_tags."<br />\n");
-  mkdir("../".$dir_tags,0755);
+  $i=mkdir($dir,0755);
+  resultExe($i,"Creating tag directory: ".$dir);
   
   // Remove galleries (cached) when no update is set
   if (!isset($_GET["update"]))
   {
-    rrmdir("../".$dir_cache);
+    $dir="../".$dir_cache;
+    rrmdir($dir);
   
     // Recreate cache directory again
-    print("- Create directory: ../".$dir_cache."<br />\n");
-    mkdir("../".$dir_cache,0755);
+    $i=mkdir($dir,0755);
+    resultExe($i,"Creating index directory: ".$dir);
   }
   
   // Log
-  print("Done...");
-  print("</code>\n");
-  print("<br />\n<br />\n");
-  print("<a href=\"..\">Next...</a>");
+  print("<p><a href=\"..\">Next...</a></p>");
 
 ?>

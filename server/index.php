@@ -12,6 +12,16 @@
    */
   include_once("conf.php");
    
+  // Overwrite function
+  function resultExe($res,$text)
+  {
+    global $icon_ok;
+    global $icon_fail;
+
+    $icon = ($res) ? $icon_ok : $icon_fail;
+    print("<p><img src=\"".$icon."\" /> ".$text."</p>\n");
+  }
+
   /**
    * Global variables
    **/
@@ -58,7 +68,7 @@
   function debug($text)
   {
     global $is_debug;
-    if ($is_debug) print($text."<br />\n");
+    if ($is_debug) print("<!-- ".$text." -->");
   }
   
   /**
@@ -106,12 +116,8 @@
 	    closedir($dh);
 	  }
 	}
-	
-	// Log
-    debug("- arr_files: ".var_dump($arr_files));
-	debug("- arr_dirs: ".var_dump($arr_dirs));
   }
-  
+
   /**
    * Create cache from name
    **/
@@ -153,9 +159,10 @@
 		debug("- Status: invalid");
 		continue;
 	  }
-  
+
 	  // Log
 	  debug("- Status: valid");
+
 	  // Flag as valid image
 	  array_push($arr_pics,$file);
 
@@ -306,18 +313,24 @@
 	$buffer_file=str_replace("%home%",$text_home,$buffer_file);
 	
     // Save file
-	if ($write) file_put_contents($dir_cache.$name,$buffer_file);
+    $file=$dir_cache.$name;
+	if ($write) file_put_contents($file,$buffer_file);
+
+    // Show link to hidden gallery
+    if ($var_hidden)
+    {
+      global $icon_link;
+      print("<p><img src=\"".$icon_link."\"> Link to hidden gallery: <a href=\"".$file."\" target=\"_blank\">".$dir."</a></p>\n");
+    }
   }
-  
+
   /**
    * Read global configuration
    **/
-  print("<code>\n");
-
   if (file_exists($file_conf_global))
   {
-    debug("Reading global configuration...");
     $var_conf_global=parse_ini_file($file_conf_global);
+    resultExe($var_conf_global,"Reading global configuration: ".$file_conf_global);
   }
 
   /**
@@ -328,6 +341,7 @@
   $arr_dirs=array();
   
   // Parse original galleries
+  resultExe(true,"Parsing galleries: ".$dir_pics);
   parse_dir($dir_pics,$arr_files,$arr_dirs);
   
   // Check all directories
@@ -425,14 +439,11 @@
 	  $file_out=$file_index;
 	  if ($cur_tag!="*") $file_out=$dir_tags.$cur_tag.".html";
 	  
-      debug("Updating index file: ".$file_out);
-      file_put_contents($file_out,$buffer_file);
+      $i=file_put_contents($file_out,$buffer_file);
+      resultExe(($i>0),"Updating index file: ".$file_out);
   }
 
   // Log
-  debug("Done...");
-
-  print("</code>");
-  print("<a href=\".\">Next...</a>");
+  print("<p><a href=\".\">Next...</a></p>");
   
 ?>

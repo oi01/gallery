@@ -12,14 +12,15 @@
   $dir_thumbs="thumbs/";
   $dir_cache="index/";
   $dir_tags="tags/";
+  $dir_icons="silk/icons/";
   $file_cache="cache.tpl";
-  $file_index=$dir_cache."index.html";
   $file_index_tpl="index.tpl";
   $file_info="info.txt";
   $file_conf_gallery="gallery.conf";
   $file_install="install.php";
   $file_template="install.tpl";
   $file_reset="tools/reset.php";
+  $file_index=$dir_cache."index.html";
   $table_col=4;
   $thumb_width=160;
   $thumb_height=120;
@@ -37,6 +38,7 @@
 	if (array_key_exists("dir_thumbs",$conf)) $dir_thumbs=$conf["dir_thumbs"];
 	if (array_key_exists("dir_cache",$conf)) $dir_cache=$conf["dir_cache"];
 	if (array_key_exists("dir_tags",$conf)) $dir_tags=$conf["dir_tags"];
+    if (array_key_exists("dir_icons",$conf)) $dir_icons=$conf["dir_icons"];
 	if (array_key_exists("file_cache",$conf)) $file_cache=$conf["file_cache"];
 	if (array_key_exists("file_index",$conf)) $file_index=$conf["file_index"];
 	if (array_key_exists("file_conf_gallery",$conf)) $file_conf_gallery=$conf["file_conf_gallery"];
@@ -50,5 +52,10 @@
 	if (array_key_exists("text_title",$conf)) $text_title=$conf["text_title"];
 	if (array_key_exists("text_home",$conf)) $text_home=$conf["text_home"];
   }
+
+  // Dynamic files
+  $icon_ok=$dir_icons."accept.png";
+  $icon_fail=$dir_icons."cancel.png";
+  $icon_link=$dir_icons."link.png";
 
 ?>
