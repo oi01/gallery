@@ -1,3 +1,18 @@
+#
+# oi01.de - Gallery
+#
+# Description:
+# - Block access from social galleries to prevent face recognition
+#
+
+# Select blacklist
 order allow,deny
+
+# Deny Facebook
 deny from 69.
+
+# Deny Google+
+deny from 74.125.225.
+
+# Allow all others
 allow from all
