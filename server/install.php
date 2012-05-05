@@ -66,6 +66,10 @@
     print("Creating thumbs directory");
     mkdir($dir_thumbs,0755);
 
+    // Create rss directory
+    print("Creating rss directory");
+    mkdir($dir_rss,0755);
+
     /**
      * Remove installation files
      **/

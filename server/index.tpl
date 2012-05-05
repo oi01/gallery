@@ -2,6 +2,7 @@
 	<head>
 		<title>%title%</title>	
 		<link rel="stylesheet" type="text/css" href="../style.css">
+        <link rel="alternate" type="application/rss+xml" title="%title% RSS Feed" href="../rss/rss.xml">
 	</head>
 	<body>
 	    <h1><a href="../">%home%</a></h1>

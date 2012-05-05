@@ -20,6 +20,8 @@
   $file_install="install.php";
   $file_template="install.tpl";
   $file_reset="tools/reset.php";
+  $file_rss="rss/rss.xml";
+  $dir_rss=dirname($file_rss);
   $table_col=4;
   $thumb_width=160;
   $thumb_height=120;

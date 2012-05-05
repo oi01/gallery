@@ -428,8 +428,49 @@
       debug("Updating index file: ".$file_out);
       file_put_contents($file_out,$buffer_file);
   }
+  
+  /**
+   * Write an RSS file
+   **/
+  // <link rel="alternate" type="application/rss+xml" title="Golem.de RSS Feed" href="http://rss.golem.de/rss.php?feed=RSS1.0">
+  // <link href="/favicon.ico" rel="shortcut icon" />
+  // set the default timezone to use
+  // date_default_timezone_set('UTC');
+  
+  $buffer_rss="<?xml version=\"1.0\" encoding=\"utf-8\"?>\n";
+  $buffer_rss.="<feed xmlns=\"http://www.w3.org/2005/Atom\">\n";
+  $buffer_rss.="  <title>".$text_title."</title>\n";
+  // $buffer_rss.="  <subtitle></subtitle>\n";
+  // $buffer_rss.="  <link href=\"".$_SERVER["SCRIPT_URI"]."\" />\n"; // TODO
+  $buffer_rss.="  <link rel=\"self\" href=\"".$_SERVER["SCRIPT_URI"]."\" />\n";
+  $buffer_rss.="  <updated>".date(DATE_ATOM,time())."</updated>\n";
+  $buffer_rss.="  <author>\n";
+  $buffer_rss.="    <name>oi01 - Gallery</name>\n";
+  $buffer_rss.="  </author>\n";
+  // $buffer_rss.="  <id></id>\n"; // TODO
 
-  // Log
+  foreach($arr_topics as $name => $file)
+  {
+    $buffer_rss.="  <entry>\n";
+    $buffer_rss.="    <title>".$name."</title>\n";
+    $buffer_rss.="    <link href=\"../".$dir_cache.str_replace(" ","_",$name).".html\" />\n";
+    $buffer_rss.="    <id>../".$dir_cache.str_replace(" ","_",$name).".html</id>\n";
+    $buffer_rss.="    <published>".date(DATE_ATOM,time())."</published>\n";
+    $buffer_rss.="    <updated>".date(DATE_ATOM,time())."</updated>\n";
+    $buffer_rss.="    <summary>".$name."</summary>\n";
+    $buffer_rss.="    <link rel=\"enclosure\" href=\"../".$dir_thumbs.$name."/".$file."\" type=\"image/jpg\" />\n";
+    $buffer_rss.="  </entry>\n";
+  }
+    
+  $buffer_rss.="</feed>\n";
+
+  // Write RSS file
+  debug("Updating rss file: ".$file_rss);
+  file_put_contents($file_rss,$buffer_rss);
+
+  /**
+   * Finalize
+   **/
   debug("Done...");
 
   print("</code>");
