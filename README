@@ -1,4 +1,4 @@
-=== oi01 - Gallery 1.0 (01.04.2012)
+=== oi01 - Gallery v1.0.0 (05.05.2012)
 
 Author: Jürgen Kniephoff <git@oi01.de>
 Web:    http://www.oi01.de/gallery
@@ -12,6 +12,3 @@ Features:
 - Tags are also cached as HTML files
 - Simple global configuration file
 - Simple gallery configuration files if needed
-
-WARNING:
-- The current branch has not yet been tested!!!
