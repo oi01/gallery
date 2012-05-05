@@ -18,6 +18,7 @@
   $file_info="info.txt";
   $file_conf_gallery="gallery.conf";
   $file_install="install.php";
+  $file_template="install.tpl";
   $file_reset="tools/reset.php";
   $table_col=4;
   $thumb_width=160;
