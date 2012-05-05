@@ -10,7 +10,7 @@
   /**
    * Load configuration
    **/
-   include_once("../conf.php");
+   include_once("conf.php");
 
   /**
    * Check for a POST
