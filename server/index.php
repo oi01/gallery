@@ -41,7 +41,7 @@
   if (file_exists($file_index))
   {
     //print(file_get_contents($file_index));
-	header("Location: ".$file_index);
+	header("Location: ".$dir_cache);
 	exit();
   }
   

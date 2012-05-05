@@ -13,7 +13,7 @@
   $dir_cache="index/";
   $dir_tags="tags/";
   $file_cache="cache.tpl";
-  $file_index="index/index.html";
+  $file_index=$dir_cache."index.html";
   $file_index_tpl="index.tpl";
   $file_info="info.txt";
   $file_conf_gallery="gallery.conf";
