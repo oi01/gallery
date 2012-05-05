@@ -3,39 +3,8 @@
   /************************************************************************************************
    * oi01.de - Gallery 1.0 (01.04.2012)
    *
-   * Author: Jürgen Kniephoff <mail@oi01.de>
-   * Web:    http://www.oi01.de/
-   *
-   * Description:
-   * - A simple and fast web gallery
-   *
-   * Features:
-   * - Thumbnail creation on new galleries
-   * - Index files are cached as HTML files to improve speed and secure service
-   *
-   * Changelog:
-   * - 28.04.2012
-   *   - Added tag support
-   *
-   * - 22.04.2012
-   *   - Added update flag to keep gallery cache
-   *   - Added gallery.conf
-   *   - Added global.conf
-   *   - Added number of images in gallery
-   *   - Updated structure of info.txt
-   *
-   * - 09.04.2012
-   *   - Added support of info.txt
-   *
-   * - 02.04.2012
-   *   - Added blur for smoother thumbnails
-   *   - Added sorting of galleries in the index file (latest first)
-   *   - Added sorting of images in the gallery file (latest last)
-   *   - Added home link to index file to keep alignment to other pages
-   *   - Updated number of columns from 8 to 6 to avoid chewed text
-   *
-   * - 01.04.2012
-   *   - First Release
+   * Author: Jürgen Kniephoff <git@oi01.de>
+   * Web:    http://www.oi01.de/gallery
    ************************************************************************************************/
 
   /**
