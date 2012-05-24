@@ -10,17 +10,7 @@
   /**
    * Load configuration
    */
-  include_once("conf.php");
-   
-  // Overwrite function
-  function resultExe($res,$text)
-  {
-    global $icon_ok;
-    global $icon_fail;
-
-    $icon = ($res) ? $icon_ok : $icon_fail;
-    print("<p><img src=\"".$icon."\" /> ".$text."</p>\n");
-  }
+  include_once("common.php");
 
   /**
    * Global variables
@@ -28,7 +18,6 @@
   $arr_topics=array();
   $arr_count=array();
   $arr_tags=array("*" => array());
-  $var_conf_global=array();
   
   /**
    * Check for relocations
@@ -36,29 +25,29 @@
   // Check if index and gallerie cache shall be removed
   if (isset($_GET["reset"]))
   {
-	header("Location: ".$file_reset);
+	header("Location: ".$conf["file_reset"]);
 	exit();
   }
 
   // Check if index only shall be removed
   if (isset($_GET["update"]))
   {
-	header("Location: ".$file_reset."?update=1");
+	header("Location: ".$conf["file_reset"]."?update=1");
 	exit();
   }
   
   // Check for an updated index file
-  if (file_exists($file_index))
+  if (file_exists($conf["file_index"]))
   {
-    //print(file_get_contents($file_index));
-	header("Location: ".$dir_cache);
+    //print(file_get_contents($conf["file_index"]));
+	header("Location: ".$conf["dir_cache"]);
 	exit();
   }
   
   // Check if software needs to be installed
-  if (file_exists($file_install))
+  if (file_exists($conf["file_install"]))
   {
-	header("Location: ".$file_install);
+	header("Location: ".$conf["file_install"]);
 	exit();
   }
   
@@ -67,8 +56,8 @@
    **/
   function debug($text)
   {
-    global $is_debug;
-    if ($is_debug) print("<!-- ".$text." -->");
+    global $conf;
+    if ($conf["is_debug"]) print("<!-- ".$text." -->");
   }
   
   /**
@@ -123,6 +112,8 @@
    **/
   function createCache($dir_pics,$dir_thumbs,$dir_cache,$dir,$name,$write)
   {
+  	global $conf;
+  	 
     // Log
     debug("Creating cache...");
 	debug("- dir_pics: ".$dir_pics);
@@ -168,11 +159,9 @@
 
 	  if ($write)
 	  {
-		
-		// Resize image
-		global $thumb_width, $thumb_height;
-		$im_thumb=imagecreatetruecolor($thumb_width,$thumb_height);
-		imagecopyresampled($im_thumb,$im,0,0,0,0,$thumb_width,$thumb_height,imagesx($im),imagesy($im));
+		// Resize image				
+		$im_thumb=imagecreatetruecolor($conf["thumb_width"],$conf["thumb_height"]);
+		imagecopyresampled($im_thumb,$im,0,0,0,0,$conf["thumb_width"],$conf["thumb_height"],imagesx($im),imagesy($im));
 		
 		// Save image
 		debug("- Saving to: ".$dir_thumbs.$dir."/".$file);
@@ -194,31 +183,29 @@
 	$info="";
 	
 	// Check info of gallery
-	global $file_info;
-	global $file_conf_gallery;
+	global $conf;
 	
 	/**
      * Read description
 	 **/
-    debug("Reading info file: ".$dir_pics.$dir."/".$file_info);
-	if (file_exists($dir_pics.$dir."/".$file_info))
+    debug("Reading info file: ".$conf["dir_pics"].$dir."/".$conf["file_info"]);
+	if (file_exists($conf["dir_pics"].$dir."/".$conf["file_info"]))
 	{  
 	  // Read file
-	  $info=file($dir_pics.$dir."/".$file_info);
+	  $info=file($conf["dir_pics"].$dir."/".$conf["file_info"]);
 	  $info=trim(join("<br />",$info));
 	}
 	
 	/**
      * Read gallery config
 	 **/
-    global $is_tags;
     global $arr_tags;  
 
-	debug("Reading config file: ".$dir_pics.$dir."/".$file_conf_gallery);
-	if (file_exists($dir_pics.$dir."/".$file_conf_gallery))
+	debug("Reading config file: ".$conf["dir_pics"].$dir."/".$conf["file_conf_gallery"]);
+	if (file_exists($conf["dir_pics"].$dir."/".$conf["file_conf_gallery"]))
 	{
 	  // Read file
-	  $var=parse_ini_file($dir_pics.$dir."/".$file_conf_gallery);
+	  $var=parse_ini_file($conf["dir_pics"].$dir."/".$conf["file_conf_gallery"]);
 	  
 	  // Hidden
 	  if (array_key_exists("hidden",$var))
@@ -235,7 +222,7 @@
 	  }
 	  
  	  // Tags
-	  if ($is_tags && array_key_exists("tags",$var))
+	  if ($conf["is_tags"] && array_key_exists("tags",$var))
 	  {
 	    debug("#tags: ".$var["tags"]);
 	    $var_tags=explode(" ",$var["tags"]);
@@ -301,16 +288,14 @@
 	natsort($arr_pics);
 	foreach($arr_pics as $pic)
 	{
-		$buffer_pics.="    <a class=\"oi01-gallery\" href=\"../".$dir_pics.$dir."/".$pic."\" title=\"".$pic."\"><img src=\"../".$dir_thumbs.$dir."/".$pic."\" /></a>\n";
+		$buffer_pics.="    <a class=\"oi01-gallery\" href=\"../".$conf["dir_pics"].$dir."/".$pic."\" title=\"".$pic."\"><img src=\"../".$conf["dir_thumbs"].$dir."/".$pic."\" /></a>\n";
 	}
 	
     // Create template
-	global $file_cache;
-	global $text_home;
-    $buffer_file=file_get_contents($file_cache);
+    $buffer_file=file_get_contents($conf["file_cache"]);
 	$buffer_file=str_replace("%pics%",$buffer_pics,$buffer_file);
 	$buffer_file=str_replace("%title%",$dir,$buffer_file);
-	$buffer_file=str_replace("%home%",$text_home,$buffer_file);
+	$buffer_file=str_replace("%home%",$conf["text_home"],$buffer_file);
 	
     // Save file
     $file=$dir_cache.$name;
@@ -325,15 +310,6 @@
   }
 
   /**
-   * Read global configuration
-   **/
-  if (file_exists($file_conf_global))
-  {
-    $var_conf_global=parse_ini_file($file_conf_global);
-    resultExe($var_conf_global,"Reading global configuration: ".$file_conf_global);
-  }
-
-  /**
    * Check for an updated cache
    **/
   // Pre-define variables
@@ -341,8 +317,8 @@
   $arr_dirs=array();
   
   // Parse original galleries
-  resultExe(true,"Parsing galleries: ".$dir_pics);
-  parse_dir($dir_pics,$arr_files,$arr_dirs);
+  resultExe(true,"Parsing galleries: ".$conf["dir_pics"]);
+  parse_dir($conf["dir_pics"],$arr_files,$arr_dirs);
   
   // Check all directories
   foreach($arr_dirs as $dir)
@@ -352,7 +328,7 @@
 	$name.=".html";
 	
 	// Check if exists and write cache
-    createCache($dir_pics,$dir_thumbs,$dir_cache,$dir,$name,!file_exists($dir_cache.$name));
+    createCache($conf["dir_pics"],$conf["dir_thumbs"],$conf["dir_cache"],$dir,$name,!file_exists($conf["dir_cache"].$name));
   }
 
   /**
@@ -397,16 +373,16 @@
 		if (!in_array($name,$cur_tagdirs)) continue;
 		
 		// Show gallery
-		if ($n % $table_col == 0)
+		if ($n % $conf["table_col"] == 0)
 		{
 		  $buffer_index.="  <tr>\n";
 		}
 
 		$buffer_index.="   <td align=\"center\">\n";
-		$buffer_index.="     <a href=\"../".$dir_cache.str_replace(" ","_",$name).".html\"><img src=\"../".$dir_thumbs.$name."/".$file."\"/><br />".$name." (".$arr_count[$name].")</a>\n";
+		$buffer_index.="     <a href=\"../".$conf["dir_cache"].str_replace(" ","_",$name).".html\"><img src=\"../".$conf["dir_thumbs"].$name."/".$file."\"/><br />".$name." (".$arr_count[$name].")</a>\n";
 		$buffer_index.="   </td>\n";
 
-		if ($n % $table_col == $table_col-1)
+		if ($n % $conf["table_col"] == $conf["table_col"]-1)
 		{
 		  $buffer_index.="  </tr>\n";
 		}
@@ -415,7 +391,7 @@
 	  }
 
 	  // Pad
-	  $n=4 - $n % $table_col;
+	  $n=4 - $n % $conf["table_col"];
 	  if ($n>=0)
 	  {
 		while($n >= 0)
@@ -430,13 +406,13 @@
 	  $buffer_index.="</table>\n";
 
 	  // Prepare content
-	  $buffer_file=file_get_contents($file_index_tpl);
+	  $buffer_file=file_get_contents($conf["file_index_tpl"]);
       $buffer_file=str_replace("%index%",$buffer_index,$buffer_file);
-	  $buffer_file=str_replace("%title%",$text_title,$buffer_file);
-	  $buffer_file=str_replace("%home%",$text_home,$buffer_file);
+	  $buffer_file=str_replace("%title%",$conf["text_title"],$buffer_file);
+	  $buffer_file=str_replace("%home%",$conf["text_home"],$buffer_file);
 
       // Save file
-	  $file_out=$file_index;
+	  $file_out=$conf["file_index"];
 	  if ($cur_tag!="*") $file_out=$dir_tags.$cur_tag.".html";
 	  
       $i=file_put_contents($file_out,$buffer_file);

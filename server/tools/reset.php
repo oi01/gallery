@@ -11,16 +11,7 @@
    * Load configuration
    */
   include_once("../conf.php");
-
-  // Common functions
-  function resultExe($res,$text)
-  {
-    global $icon_ok;
-    global $icon_fail;
-
-    $icon = ($res) ? $icon_ok : $icon_fail;
-    print("<p><img src=\"../".$icon."\" /> ".$text."</p>\n");
-  }
+  include_once("../fx.php");
 
   /**
    * Remove directory recursively
@@ -59,12 +50,12 @@
   print("<h1>Resetting...</h1>\n");
   
   // Remove index (cached)
-  $file="../".$file_index;
+  $file="../".$conf["file_index"];
   $i=unlink($file);
   resultExe($i,"Removing index file: ".$file);
   
   // Remove tags
-  $dir="../".$dir_tags;
+  $dir="../".$conf["dir_tags"];
   rrmdir($dir);
 
   // Recreate tag directory again
@@ -74,7 +65,7 @@
   // Remove galleries (cached) when no update is set
   if (!isset($_GET["update"]))
   {
-    $dir="../".$dir_cache;
+    $dir="../".$conf["dir_cache"];
     rrmdir($dir);
   
     // Recreate cache directory again
