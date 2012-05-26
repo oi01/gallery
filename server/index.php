@@ -159,10 +159,19 @@
 
 	  if ($write)
 	  {
+        $w=$conf["thumb_width"];
+        $h=$conf["thumb_height"];
+
+        // Check orientation
+        if (imagesy($im)>imagesx($im))
+        {
+          $w=$h*$conf["thumb_width"] / $conf["thumb_height"];
+        }
+
 		// Resize image				
-		$im_thumb=imagecreatetruecolor($conf["thumb_width"],$conf["thumb_height"]);
-		imagecopyresampled($im_thumb,$im,0,0,0,0,$conf["thumb_width"],$conf["thumb_height"],imagesx($im),imagesy($im));
-		
+		$im_thumb=imagecreatetruecolor($w,$h);
+        imagecopyresampled($im_thumb,$im,0,0,0,0,$w,$h,imagesx($im),imagesy($im));
+
 		// Save image
 		debug("- Saving to: ".$dir_thumbs.$dir."/".$file);
 		if (!file_exists($dir_thumbs.$dir))
