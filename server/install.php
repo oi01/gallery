@@ -22,6 +22,7 @@
      **/
     // Create tool directory
     $dir_tools=dirname($_SERVER["SCRIPT_FILENAME"])."/tools/";
+    $dir_etc=dirname($_SERVER["SCRIPT_FILENAME"])."/etc/";
 
     // Create .htaccess
     $file_htaccess=$dir_tools.".htaccess";
@@ -40,12 +41,16 @@
     /**
      * Create .htpasswd
      **/
-    $file_htpasswd=$dir_tools.".htpasswd";
-
     // Add user and encrypt password
     $buffer=$_POST["user"].":".crypt($_POST["pass"], base64_encode($_POST["pass"]));
 
-    // Save file
+    // Secure path /tools
+    $file_htpasswd=$dir_tools.".htpasswd";
+    $i=file_put_contents($file_htpasswd,$buffer);
+    resultExe(($i>0),"Creating .htpasswd: ".$file_htpasswd);
+
+    // Secure path /etc
+    $file_htpasswd=$dir_etc.".htpasswd";
     $i=file_put_contents($file_htpasswd,$buffer);
     resultExe(($i>0),"Creating .htpasswd: ".$file_htpasswd);
 

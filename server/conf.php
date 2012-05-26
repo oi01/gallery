@@ -3,7 +3,7 @@
   /**
    * Static variables
    **/
-  $file_conf_global="global.conf";
+  $file_conf_global="etc/global.conf";
   
   /**
    * User-defined variables
