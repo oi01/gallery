@@ -419,6 +419,7 @@
       $buffer_file=str_replace("%index%",$buffer_index,$buffer_file);
 	  $buffer_file=str_replace("%title%",$conf["text_title"],$buffer_file);
 	  $buffer_file=str_replace("%home%",$conf["text_home"],$buffer_file);
+      $buffer_file=str_replace("%version%",$version_string,$buffer_file);
 
       // Save file
 	  $file_out=$conf["file_index"];

@@ -86,6 +86,8 @@
   /**
    * Show setup formular
    **/
-  print(file_get_contents($file_template));
+  $out=file_get_contents($file_template);
+  $out=str_replace("%version%",$version_string,$out);
+  print($out);
 
 ?>

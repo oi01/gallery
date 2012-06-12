@@ -5,6 +5,11 @@
    **/
   $file_conf_global="etc/global.conf";
   
+  $version_major=1;
+  $version_minor=0;
+  $version_fix=1;
+  $version_string="v".$version_major.".".$version_minor.".".$version_fix;
+
   /**
    * User-defined variables
    **/
