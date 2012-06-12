@@ -18,7 +18,7 @@
   $arr_topics=array();
   $arr_count=array();
   $arr_tags=array("*" => array());
-  
+
   /**
    * Check for relocations
    */
@@ -354,6 +354,15 @@
   // Parse tag list
   foreach($arr_tags as $cur_tag => $cur_tagdirs)
   {
+    // Reset counter
+    $counter=0;
+    $page=0;
+    $max_images=$conf["table_row"] * $conf["table_col"];
+    $max_pages=ceil(sizeof($cur_tagdirs) / $max_images);
+
+    // Prepare pages
+    while($counter < sizeof($cur_tagdirs))
+    {
       // Reset buffer
 	  $buffer_index="";
 	  
@@ -367,7 +376,7 @@
 		  if ($tag == $cur_tag) continue;
           
 		  // Add next tag
-		  $buffer_index.=" <a href=\"../".$dir_tags.$tag.".html\">#".$tag."</a>";
+		  $buffer_index.=" <a href=\"../".$conf["dir_tags"].$tag.".html\">#".$tag."</a>";
 		}
 		$buffer_index.="</h2>\n";
 	  }
@@ -376,11 +385,14 @@
 	  $buffer_index.="<table align=\"center\">\n";
 	  
 	  $n=0;
-	  foreach($arr_topics as $name => $file)
+	  for ($i=$counter;$i<sizeof($cur_tagdirs) && $n<$max_images;$i++)
 	  {
-	    // Check if gallery shall be shown
-		if (!in_array($name,$cur_tagdirs)) continue;
-		
+        // Get name of the gallery
+        $name=$cur_tagdirs[$i];
+
+        // Get index image
+        $file=$arr_topics[$name];
+
 		// Show gallery
 		if ($n % $conf["table_col"] == 0)
 		{
@@ -396,7 +408,9 @@
 		  $buffer_index.="  </tr>\n";
 		}
 		
+        // Increase counters
 		$n++;
+        $counter++;
 	  }
 
 	  // Pad
@@ -414,6 +428,52 @@
 	  
 	  $buffer_index.="</table>\n";
 
+      // Generate names
+      $ext_page_cur="";
+      $ext_page_prev="";
+      $ext_page_next="_".($page+1);
+
+      if ($page>0)
+      {
+        $ext_page_cur="_".$page;
+        $ext_page_prev="_".($page-1);
+
+        if ($page==1) $ext_page_prev="";
+      }
+
+	  $file_out=$conf["dir_cache"]."index".$ext_page_cur.".html";
+	  if ($cur_tag!="*")
+      {
+        $file_out=$conf["dir_tags"].$cur_tag.$ext_page_cur.".html";
+      }
+
+      $file_prev=$conf["dir_cache"]."index".$ext_page_prev.".html";
+      $file_next=$conf["dir_cache"]."index".$ext_page_next.".html";
+      if ($page>1)
+      {
+        $file_prev=$conf["dir_tags"].$cur_tag.$ext_prev.".html";
+      }
+
+      // Add prev/next buttons
+      if ($max_pages>0)
+      {
+        $buffer_index.="<table align=\"center\">";
+        $buffer_index.="  <tr>";
+
+        if ($page>0)
+        {
+          $buffer_index.="    <td style=\"text-align:left;\"><a href=\"../".$file_prev."\"><img src=\"../".$icon_prev."\"></a></td>";
+        }
+
+        if ($page<($max_pages-1))
+        {
+          $buffer_index.="    <td style=\"text-align:right;\"><a href=\"../".$file_next."\"><img src=\"../".$icon_next."\"></a></td>";
+        }
+
+        $buffer_index.="  </tr>\n";
+        $buffer_index.="</table>\n";
+      }
+
 	  // Prepare content
 	  $buffer_file=file_get_contents($conf["file_index_tpl"]);
       $buffer_file=str_replace("%index%",$buffer_index,$buffer_file);
@@ -421,12 +481,13 @@
 	  $buffer_file=str_replace("%home%",$conf["text_home"],$buffer_file);
       $buffer_file=str_replace("%version%",$version_string,$buffer_file);
 
-      // Save file
-	  $file_out=$conf["file_index"];
-	  if ($cur_tag!="*") $file_out=$dir_tags.$cur_tag.".html";
-	  
+	  // Save file
       $i=file_put_contents($file_out,$buffer_file);
       resultExe(($i>0),"Updating index file: ".$file_out);
+
+      // Increase counter
+      $page++;
+    }
   }
 
   // Log

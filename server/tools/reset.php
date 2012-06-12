@@ -20,22 +20,31 @@
   {
     // Check for valid content
     if ($dir=="") return;
-	
+    if (!file_exists($dir)) return;
+
+	print("<!-- Prepare to remove directory: ".$dir." -->\n");
+
     // Parse all files and directories
-    foreach(glob($dir . '/*') as $file)
-	{
-	    // Check if directory or file
-        if(is_dir($file))
-	    {
-		    // Parse new directory
-            rrmdir($file);
-		}
-        else
-		{
-		    // Remove file
-		    print("<!-- Removing file: ".$file." -->\n");
-            if (!unlink($file)) exit();
-		}
+    $files=glob($dir.'/*');
+    if ($files)
+    {
+        foreach($files as $file)
+        {
+            print("<!-- File/Dir: ".$file." -->\n");
+
+            // Check if directory or file
+            if(is_dir($file))
+            {
+                // Parse new directory
+                rrmdir($file);
+            }
+            else
+            {
+                // Remove file
+                print("<!-- Removing file: ".$file." -->\n");
+                if (!unlink($file)) exit();
+            }
+        }
     }
 	
 	// Remove directory
@@ -51,8 +60,11 @@
   
   // Remove index (cached)
   $file="../".$conf["file_index"];
-  $i=unlink($file);
-  resultExe($i,"Removing index file: ".$file);
+  if (file_exists($file))
+  {
+    $i=unlink($file);
+    resultExe($i,"Removing index file: ".$file,"../");
+  }
   
   // Remove tags
   $dir="../".$conf["dir_tags"];
@@ -60,7 +72,7 @@
 
   // Recreate tag directory again
   $i=mkdir($dir,0755);
-  resultExe($i,"Creating tag directory: ".$dir);
+  resultExe($i,"Creating tag directory: ".$dir,"../");
   
   // Remove galleries (cached) when no update is set
   if (!isset($_GET["update"]))
@@ -70,7 +82,7 @@
   
     // Recreate cache directory again
     $i=mkdir($dir,0755);
-    resultExe($i,"Creating index directory: ".$dir);
+    resultExe($i,"Creating index directory: ".$dir,"../");
   }
   
   // Log

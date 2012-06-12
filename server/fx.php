@@ -13,13 +13,13 @@
    * @param unknown_type $res
    * @param unknown_type $text
    */
-  function resultExe($res,$text)
+  function resultExe($res,$text,$dir="")
   {
     global $icon_ok;
     global $icon_fail;
 
     $icon = ($res) ? $icon_ok : $icon_fail;
-    print("<p><img src=\"".$icon."\" /> ".$text."</p>\n");
+    print("<p><img src=\"".$dir.$icon."\" /> ".$text."</p>\n");
   }
   
 ?>
