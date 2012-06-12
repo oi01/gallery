@@ -89,7 +89,7 @@
   /**
    * Show setup formular
    **/
-  $out=file_get_contents($file_template);
+  $out=file_get_contents($conf["file_template"]);
   $out=str_replace("%version%",$version_string,$out);
   print($out);
 
