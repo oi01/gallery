@@ -52,9 +52,10 @@
     // Add user and encrypt password
     $buffer=$_POST["user"].":".crypt($_POST["pass"], base64_encode($_POST["pass"]));
 
-    // Write htpasswd
-    $i=file_put_contents($file_htpasswd,$buffer);
-    resultExe(($i>0),"Creating .htpasswd: ".$file_htpasswd);
+    // Secure path /etc
+    $out_htpasswd=$dir_etc.".htpasswd";
+    $i=file_put_contents($out_htpasswd,$buffer);
+    resultExe(($i>0),"Creating .htpasswd: ".$out_htpasswd);
 
     /**
      * Create further directories
@@ -88,6 +89,8 @@
   /**
    * Show setup formular
    **/
-  print(file_get_contents($conf["file_template"]));
+  $out=file_get_contents($file_template);
+  $out=str_replace("%version%",$version_string,$out);
+  print($out);
 
 ?>

@@ -4,7 +4,7 @@
 		<link rel="stylesheet" type="text/css" href="style.css">
 	</head>
 	<body>
-	    <h1>oi01 - Gallery: Setup</h1>
+	    <h1>oi01 - Gallery %version%: Setup</h1>
 		
 		<form action="install.php" method="post">
 			<table width="100%">
