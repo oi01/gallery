@@ -18,7 +18,7 @@
   if (isset($_POST["user"]) && isset($_POST["pass"]))
   {
     /**
-     * Create .htaccess
+     * Create static .htaccess
      **/
     // Set static directories
     $dir_tools=dirname($_SERVER["SCRIPT_FILENAME"])."/tools/";
@@ -27,7 +27,7 @@
      // Set filenames
     $file_htpasswd=$dir_etc.".htpasswd";
 
-    // Create .htaccess
+    // Create .htaccess in /tools and /etc
     $buffer="AuthType Basic\n";
     $buffer.="AuthName \"Access request\"\n";   
     $buffer.="AuthUserFile ".$file_htpasswd."\n";

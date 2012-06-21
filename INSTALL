@@ -39,6 +39,12 @@ Each gallery may have the file "gallery.conf" with attributes like whether it is
 Furthermore you can save a file called "info.txt". The text is shown in the info block above the images and can be used to say some words about it.
 
 
+4) Restricted access
+
+Social networks are not allowed to access the galleries by default. Depending on the purpose the settings can be changed in the .htaccess in the root directory.
+
+
+
 --- Client
 
 Required tool: ImageMagick > http://www.imagemagick.org

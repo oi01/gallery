@@ -5,11 +5,11 @@
 	</head>
 	<body>
 	    <h1>oi01 - Gallery %version%: Setup</h1>
-		
+
 		<form action="install.php" method="post">
 			<table width="100%">
 				<tr>
-					<td class="title" colspan="2">Reset</td>
+					<td class="title" colspan="2">Security</td>
 				</tr>
 				<tr>
 					<td class="desc" colspan="2">Before a reset of the gallery is executed the initiator will be asked for a user and a password.</td>

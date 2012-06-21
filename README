@@ -1,4 +1,4 @@
-=== oi01 - Gallery v1.0.0 (05.05.2012)
+=== oi01 - Gallery v1.1.0 (21.06.2012)
 
 Author: Jürgen Kniephoff <git@oi01.de>
 Web:    http://www.oi01.de/gallery
@@ -8,7 +8,9 @@ Description:
 
 Features:
 - Thumbnail creation on new galleries
-- Index files are cached as HTML files to improve speed and secure service
-- Tags are also cached as HTML files
+- Index and tag files are cached as HTML files to improve speed and secure service
+- No face recognition
+- No social networks allowed by default (can be changed manually)
 - Simple global configuration file
 - Simple gallery configuration files if needed
+- A client script based on imagemagick to modify images before uploading

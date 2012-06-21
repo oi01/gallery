@@ -2,28 +2,21 @@
 
 --- ChangeLog
 
+21.06.2012 [v1.1.0]
+- [#12] Added pages at a defined number of galleries
+- [#4] Updated visual appearance of hidden galleries
+- [#11] Fixed thumbnail dimensions
+
 05.05.2012 [v1.0.0]
-- Prepared for release
-
-28.04.2012
 - Added tag support
-
-22.04.2012
 - Added update flag to keep gallery cache
 - Added gallery.conf
 - Added global.conf
 - Added number of images in gallery
-- Updated structure of info.txt
-
-09.04.2012
 - Added support of info.txt
-
-02.04.2012
 - Added blur for smoother thumbnails
 - Added sorting of galleries in the index file (latest first)
 - Added sorting of images in the gallery file (latest last)
 - Added home link to index file to keep alignment to other pages
 - Updated number of columns from 8 to 6 to avoid chewed text
-
-01.04.2012
-- First Release
+- Updated structure of info.txt
