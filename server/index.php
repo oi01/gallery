@@ -165,7 +165,7 @@
         // Check orientation
         if (imagesy($im)>imagesx($im))
         {
-          $w=$h*$conf["thumb_width"] / $conf["thumb_height"];
+          $w=$h*$conf["thumb_height"] / $conf["thumb_width"];
         }
 
 		// Resize image				
@@ -347,10 +347,6 @@
   // Sort tags
   uksort($arr_tags, 'strnatcmp');
   
-  // Sort galleries
-  uksort($arr_topics, 'strnatcmp');
-  $arr_topics=array_reverse($arr_topics);
-
   // Parse tag list
   foreach($arr_tags as $cur_tag => $cur_tagdirs)
   {
@@ -359,6 +355,10 @@
     $page=0;
     $max_images=$conf["table_row"] * $conf["table_col"];
     $max_pages=ceil(sizeof($cur_tagdirs) / $max_images);
+
+    // Sort galleries
+    usort($cur_tagdirs, 'strnatcmp');
+    $cur_tagdirs=array_reverse($cur_tagdirs);
 
     // Prepare pages
     while($counter < sizeof($cur_tagdirs))
