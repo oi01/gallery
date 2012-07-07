@@ -6,12 +6,18 @@
  ************************************************************************************************/
 
 /* Image border */
-img  {
+img {
   border: 1px solid #000000;
 }
 
 /* Normal link */
 a:link {
+  color: #000000;
+  text-decoration: none;
+}
+
+/* Normal link in info */
+a.info:link {
   color: #000000;
   text-decoration: none;
 }
@@ -66,14 +72,6 @@ code {
   font: 12px;
 }
 
-/* pictures */
-.pics {
-  display: block;
-  border: 1px solid #c0c0c0;
-  border-spacing: 16px;
-  text-align: center;
-}
-
 /* footer */
 a.footer {
   clear: left;
@@ -107,4 +105,10 @@ p.footer {
 .desc {
   color: #000000;
   background-color: #e0e0e0;
+}
+
+/* Prev/Next images */
+.step {
+  border-style: none;
+  text-decoration: none;
 }

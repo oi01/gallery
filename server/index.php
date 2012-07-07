@@ -462,12 +462,12 @@
 
         if ($page>0)
         {
-          $buffer_index.="    <td style=\"text-align:left;\"><a href=\"../".$file_prev."\"><img src=\"../".$icon_prev."\"></a></td>";
+          $buffer_index.="    <td style=\"text-align:left;\"><a href=\"../".$file_prev."\"><img class=\"step\" src=\"../".$icon_prev."\"></a></td>";
         }
 
         if ($page<($max_pages-1))
         {
-          $buffer_index.="    <td style=\"text-align:right;\"><a href=\"../".$file_next."\"><img src=\"../".$icon_next."\"></a></td>";
+          $buffer_index.="    <td style=\"text-align:right;\"><a href=\"../".$file_next."\"><img class=\"step\" src=\"../".$icon_next."\"></a></td>";
         }
 
         $buffer_index.="  </tr>\n";
