@@ -290,7 +290,7 @@
 	{
 	  $buffer_pics="<div class=\"info\">\n";
 	  $buffer_pics.=$info;
-	  $buffer_pics.="</div>\n"
+	  $buffer_pics.="</div>\n";
 	  $buffer_pics.="<br />\n";
 	}
 	
@@ -367,18 +367,30 @@
       // Reset buffer
 	  $buffer_index="";
 	  
-	  // Show tags only in index and only if other tags exist
-	  if ($cur_tag=="*" && sizeof($arr_tags)>1)
+	  // Show tags only if other tags exist
+	  if (sizeof($arr_tags)>1)
 	  {
 		$buffer_index.="<h2>";
+		
 		foreach($arr_tags as $tag => $tag_dirs)
 		{
-		  // Skip default tag
-		  if ($tag == $cur_tag) continue;
-          
+		  $tag_name="#".$tag;
+		  $tag_link=$conf["dir_tags"].$tag.".html";
+		  
+		  if ($tag == "*")
+		  {
+		    $tag_name="*";
+		    $tag_link="";
+		  }
+		
 		  // Add next tag
-		  $buffer_index.=" <a href=\"../".$conf["dir_tags"].$tag.".html\">#".$tag."</a>";
+		  $buffer_index.=" <a href=\"../".$tag_link."\"";
+		
+		  // Emphasize current tag
+		  if ($tag == $cur_tag) $buffer_index.=" class=\"emph\"";
+		  $buffer_index.=">".$tag_name."</a>";
 		}
+		
 		$buffer_index.="</h2>\n";
 	  }
 	  
@@ -493,5 +505,5 @@
 
   // Log
   print("<p><a href=\".\">Next...</a></p>");
-  
+
 ?>
