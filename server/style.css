@@ -16,12 +16,6 @@ a:link {
   text-decoration: none;
 }
 
-/* Normal link in info */
-a.info:link {
-  color: #000000;
-  text-decoration: none;
-}
-
 /* Visited link */
 a:visited {
   color: #000000;
@@ -32,6 +26,19 @@ a:visited {
 a:hover {
   color: #000080;
   text-decoration: none;
+}
+
+/* Info text */
+#info {
+  color: #000000;
+  background-color: #e0e0e0;
+  border: 1px solid #808080;
+  display: block;
+}
+
+/* Normal link in info */
+#info a:link {
+  color: #0000c0;
 }
 
 /* body */
@@ -91,14 +98,6 @@ p.footer {
 .title {
   color: #ffffff;
   background-color: #808080;
-}
-
-/* Info text */
-.info {
-  color: #000000;
-  background-color: #e0e0e0;
-  border: 1px solid #808080;
-  display: block;
 }
 
 /* Setup description */

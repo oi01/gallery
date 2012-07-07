@@ -288,9 +288,10 @@
 	// Check for information text
 	if (strlen($info) > 0)
 	{
-	  $buffer_pics="<p class=\"info\">\n";
+	  $buffer_pics="<div class=\"info\">\n";
 	  $buffer_pics.=$info;
-	  $buffer_pics.="</p>\n";
+	  $buffer_pics.="</div>\n"
+	  $buffer_pics.="<br />\n";
 	}
 	
     // Generate image codes
