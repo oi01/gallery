@@ -17,7 +17,7 @@ a:link {
 }
 
 /* Emphasized link in tag area */
-a.emph:link {
+.emph {
   color: #0040c0;
   text-decoration: none;
 }

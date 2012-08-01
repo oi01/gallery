@@ -518,11 +518,15 @@
 		  }
 
 		  // Add next tag
-		  $buffer_index.=" <a href=\"../".$tag_link."\"";
-
-		  // Emphasize current tag
-		  if ($tag == $cur_tag) $buffer_index.=" class=\"emph\"";
-		  $buffer_index.=">".$tag_name."</a>";
+          if ($tag != $cur_tag)
+          {
+		    $buffer_index.=" <a href=\"../".$tag_link."\">".$tag_name."</a>";
+          }
+          else
+          {
+		    // Emphasize current tag
+		    $buffer_index.=" <span class=\"emph\">".$tag_name."</span>";
+          }
 		}
 		
 		$buffer_index.="</h2>\n";
