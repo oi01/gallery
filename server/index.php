@@ -514,7 +514,7 @@
 		  if ($tag == "*")
 		  {
 		    $tag_name="*";
-		    $tag_link="";
+		    $tag_link=$conf["dir_cache"];
 		  }
 
 		  // Add next tag
