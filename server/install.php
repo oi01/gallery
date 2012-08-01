@@ -17,6 +17,24 @@
    **/
   if (isset($_POST["user"]) && isset($_POST["pass"]))
   {
+    // Show header
+    print("<h1>Installing...</h1>\n");
+
+    /**
+     * Create further directories
+     **/
+    // Create index directory
+    $i=mkdir($conf["dir_cache"],0755);
+    resultExe($i,"Creating index directory: ".$conf["dir_cache"]);
+
+    // Create tag directory
+    $i=mkdir($conf["dir_tags"],0755);
+    resultExe($i,"Creating tags directory: ".$conf["dir_tags"]);
+
+    // Create thumbs directory
+    $i=mkdir($conf["dir_thumbs"],0755);
+    resultExe($i,"Creating thumbs directory: ".$conf["dir_thumbs"]);
+
     /**
      * Create static .htaccess
      **/
@@ -33,8 +51,7 @@
     $buffer.="AuthUserFile ".$file_htpasswd."\n";
     $buffer.="require valid-user\n";
 
-    // Save file
-    print("<h1>Installing...</h1>\n");
+    // Save files
 
     // Secure /tools
     $file_htaccess=$dir_tools.".htaccess";
@@ -43,6 +60,11 @@
 
     // Secure /etc
     $file_htaccess=$dir_etc.".htaccess";
+    $i=file_put_contents($file_htaccess,$buffer);
+    resultExe(($i>0),"Creating .htaccess: ".$file_htaccess);
+
+    // Secure /upload
+    $file_htaccess=$conf["dir_upload"].".htaccess";
     $i=file_put_contents($file_htaccess,$buffer);
     resultExe(($i>0),"Creating .htaccess: ".$file_htaccess);
 
@@ -56,21 +78,6 @@
     $out_htpasswd=$dir_etc.".htpasswd";
     $i=file_put_contents($out_htpasswd,$buffer);
     resultExe(($i>0),"Creating .htpasswd: ".$out_htpasswd);
-
-    /**
-     * Create further directories
-     **/
-    // Create index directory
-    $i=mkdir($conf["dir_cache"],0755);
-    resultExe($i,"Creating index directory: ".$conf["dir_cache"]);
-
-    // Create tag directory
-    $i=mkdir($conf["dir_tags"],0755);
-    resultExe($i,"Creating tags directory: ".$conf["dir_tags"]);
-
-    // Create thumbs directory
-    $i=mkdir($conf["dir_thumbs"],0755);
-    resultExe($i,"Creating thumbs directory: ".$conf["dir_thumbs"]);
 
     /**
      * Remove installation files

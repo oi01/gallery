@@ -1,0 +1,21 @@
+;
+; oi01 - Gallery
+;
+; Description:
+; - Configuration file for each gallery
+;
+
+; The filename of the image which is shown in the index
+; Usage: index=<filename>
+; index=DSC02507.JPG
+
+; Some tags seperated by a blank to group galleries
+; Usage: tags=<tag> <tag> ...
+; tags=nature vienna
+
+; Set to true to hide a gallery from the index
+; Usage: hidden=<bool>
+; hidden=true
+
+; Sort in reverse direction
+reverse=true

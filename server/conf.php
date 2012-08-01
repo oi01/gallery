@@ -7,7 +7,7 @@
   
   $version_major=1;
   $version_minor=1;
-  $version_fix=0;
+  $version_fix=1;
   $version_string="v".$version_major.".".$version_minor.".".$version_fix;
 
   /**
@@ -18,20 +18,25 @@
   $conf["dir_cache"]="index/";
   $conf["dir_tags"]="tags/";
   $conf["dir_icons"]="silk/icons/";
+  $conf["dir_ImageOfTheDay"]=$conf["dir_pics"]+"Image Of The Day/";
+  $conf["dir_upload"]=$conf["dir_pics"]+"upload/";
   $conf["file_cache"]="cache.tpl";
   $conf["file_index"]=$conf["dir_cache"]."index.html"; // unsynced!! ($ext_page @ index.php)
   $conf["file_index_tpl"]="index.tpl";
+  $conf["file_iotd_tpl"]="iotd.tpl";
   $conf["file_info"]="info.txt";
   $conf["file_conf_gallery"]="gallery.conf";
   $conf["file_install"]="install.php";
   $conf["file_template"]="install.tpl";
   $conf["file_reset"]="tools/reset.php";
+  $conf["file_ImageOfTheDay"]="iotd/index.html";
   $conf["table_col"]=4;
   $conf["table_row"]=4;
   $conf["thumb_width"]=160;
   $conf["thumb_height"]=120;
   $conf["is_debug"]=true;
   $conf["is_tags"]=true;
+  $conf["is_ImageOfTheDay"]=false;
   $conf["text_title"]="oi01 - Gallery";
   $conf["text_home"]="Home";
 
@@ -51,5 +56,9 @@
   $icon_link=$conf["dir_icons"]."link.png";
   $icon_prev=$conf["dir_icons"]."control_rewind_blue.png";
   $icon_next=$conf["dir_icons"]."control_fastforward_blue.png";
+  
+  // Static variables
+  $date_file=date("Y-m-d");
+  $date_show=date("d.m.Y");
 
 ?>

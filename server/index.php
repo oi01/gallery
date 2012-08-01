@@ -1,7 +1,7 @@
 <?
 
   /************************************************************************************************
-   * oi01 - Gallery 1.0 (01.04.2012)
+   * oi01 - Gallery 1.1.1 (29.07.2012)
    *
    * Author: Jürgen Kniephoff <git@oi01.de>
    * Web:    http://www.oi01.de/gallery
@@ -35,22 +35,142 @@
 	header("Location: ".$conf["file_reset"]."?update=1");
 	exit();
   }
-  
+
   // Check for an updated index file
   if (file_exists($conf["file_index"]))
   {
-    //print(file_get_contents($conf["file_index"]));
-	header("Location: ".$conf["dir_cache"]);
-	exit();
+    // Check if image of the day is disabled
+	if (!$conf["is_ImageOfTheDay"])
+	{
+	  // Continue to gallery index
+      header("Location: ".$conf["dir_cache"]);
+	  exit();
+	}
+
+	// Check for the iotd index
+	if (file_exists($conf["file_ImageOfTheDay"]))
+	{
+	  // Get modified date of file
+	  $date_mod=date("Y-m-d", filemtime($conf["file_ImageOfTheDay"]));
+
+	  // Check date with current date
+      if ($date_mod==$date_file)
+	  {
+        header("Location: ".$conf["file_ImageOfTheDay"]);
+	    exit();
+	  }
+	}
+
+	/**
+	 * Generate IOTD
+	 **/
+	// Parse files
+	$arr_dirs=array();
+	$arr_files=array();
+	$arr_pics=array();
+	$arr_ext=array();
+	$file_iotd="";
+
+	// Init extensions
+    array_push($arr_ext,".jpg");
+	array_push($arr_ext,".png");
+	array_push($arr_ext,".gif");
+	array_push($arr_ext,".svg");
+
+	// Parse upload directory
+	$conf["is_debug"]=false;
+	parse_dir($conf["dir_upload"],$arr_files,$arr_dirs);
+	$conf["is_debug"]=true;
+
+	// Check for the daily image
+	foreach($arr_files as $file)
+	{
+	  // Check for file with current date
+	  if (substr($file,0,10)==$date_file)
+	  {
+        // Move file from upload to gallery
+		$file_iotd=$file;
+        rename(dirname($_SERVER["SCRIPT_FILENAME"])."/".$conf["dir_upload"].$file,dirname($_SERVER["SCRIPT_FILENAME"])."/".$conf["dir_ImageOfTheDay"].$file_iotd);
+
+		// Stop searching
+		break;
+	  }
+
+	  // Add image to array if file extension matches
+	  foreach($arr_ext as $extension)
+	  {
+	    if (strtolower(substr($file,-strlen($extension))) == $extension)
+		{
+		  array_push($arr_pics,$file);
+		  break;
+		}
+	  }
+	}
+
+	// None found, select image randomly
+	if ($file_iotd=="" && count($arr_pics)>0)
+	{
+	  $r=rand(0,count($arr_pics)-1);
+	  $file=$arr_pics[$r];
+
+	  // Move file from upload to gallery
+      $file_iotd=$file;
+      rename(dirname($_SERVER["SCRIPT_FILENAME"])."/".$conf["dir_upload"].$file,dirname($_SERVER["SCRIPT_FILENAME"])."/".$conf["dir_ImageOfTheDay"].$file_iotd);
+    }
+
+	// Check if still no image wants to be IOTD
+	if ($file_iotd=="")
+	{
+	  // Continue to gallery index
+      header("Location: ".$conf["dir_cache"]);
+	  exit();
+	}
+
+	// Show info if available
+	$info="";
+	if (file_exists($conf["dir_ImageOfTheDay"]."/".$conf["file_info"]))
+	{
+	  // Read file
+	  $info=file($conf["dir_ImageOfTheDay"]."/".$conf["file_info"]);
+	  $info=trim(join("<br />",$info));
+	  $info="<p style=\"text-align:center;\">".$info."</p>";
+	}
+
+	// Show image
+	$buffer_file=file_get_contents($conf["file_iotd_tpl"]);
+    $buffer_file=str_replace("%index%",$buffer_index,$buffer_file);
+	$buffer_file=str_replace("%title%",$conf["text_title"],$buffer_file);
+    $buffer_file=str_replace("%version%",$version_string,$buffer_file);
+	$buffer_file=str_replace("%date%",$date_show,$buffer_file);
+	$buffer_file=str_replace("%info%",$info,$buffer_file);
+	$buffer_file=str_replace("%archive%","../".$conf["dir_cache"]."Image_Of_The_Day.html",$buffer_file);
+	$buffer_file=str_replace("%gallery%","../".$conf["dir_cache"],$buffer_file);
+	$buffer_file=str_replace("%iotd%","../".$conf["dir_ImageOfTheDay"].$file_iotd,$buffer_file);
+
+	// Save file
+    $i=file_put_contents($conf["file_ImageOfTheDay"],$buffer_file);
+
+	// Update IOTD gallery
+    // Build path to cache file
+	$dir="Image Of The Day";
+	$name=str_replace(" ","_",$dir);
+	$name.=".html";
+
+	// Check if exists and write cache
+    createCache($conf["dir_pics"],$conf["dir_thumbs"],$conf["dir_cache"],$dir,$name,true);
+
+	// Show IOTD
+	header("Location: ".$conf["file_ImageOfTheDay"]);
+    exit();
   }
-  
+
   // Check if software needs to be installed
   if (file_exists($conf["file_install"]))
   {
 	header("Location: ".$conf["file_install"]);
 	exit();
   }
-  
+
   /**
    * Debug messages
    **/
@@ -59,7 +179,7 @@
     global $conf;
     if ($conf["is_debug"]) print("<!-- ".$text." -->");
   }
-  
+
   /**
    * Parse directories
    **/
@@ -87,13 +207,13 @@
 		  {
 		    continue;
 	      }
-		
+
 		  // Check for file
 		  if (is_dir($dir.$file))
 		  {
 		    array_push($arr_dirs,$file);
 		  }
-		  
+
 		  // Check for dir
 		  if (is_file($dir.$file))
 		  {
@@ -284,7 +404,7 @@
 	 **/
     // Create replacement text
 	$buffer_pics="";
-	
+
 	// Check for information text
 	if (strlen($info) > 0)
 	{
@@ -293,7 +413,7 @@
 	  $buffer_pics.="</div>\n";
 	  $buffer_pics.="<br />\n";
 	}
-	
+
     // Generate image codes
 	natsort($arr_pics);
 	foreach($arr_pics as $pic)
@@ -306,7 +426,7 @@
 	$buffer_file=str_replace("%pics%",$buffer_pics,$buffer_file);
 	$buffer_file=str_replace("%title%",$dir,$buffer_file);
 	$buffer_file=str_replace("%home%",$conf["text_home"],$buffer_file);
-	
+
     // Save file
     $file=$dir_cache.$name;
 	if ($write) file_put_contents($file,$buffer_file);
@@ -336,7 +456,7 @@
     // Build path to cache file
 	$name=str_replace(" ","_",$dir);
 	$name.=".html";
-	
+
 	// Check if exists and write cache
     createCache($conf["dir_pics"],$conf["dir_thumbs"],$conf["dir_cache"],$dir,$name,!file_exists($conf["dir_cache"].$name));
   }
@@ -366,7 +486,7 @@
     {
       // Reset buffer
 	  $buffer_index="";
-	  
+
 	  // Show tags only if other tags exist
 	  if (sizeof($arr_tags)>1)
 	  {
@@ -376,16 +496,16 @@
 		{
 		  $tag_name="#".$tag;
 		  $tag_link=$conf["dir_tags"].$tag.".html";
-		  
+
 		  if ($tag == "*")
 		  {
 		    $tag_name="*";
 		    $tag_link="";
 		  }
-		
+
 		  // Add next tag
 		  $buffer_index.=" <a href=\"../".$tag_link."\"";
-		
+
 		  // Emphasize current tag
 		  if ($tag == $cur_tag) $buffer_index.=" class=\"emph\"";
 		  $buffer_index.=">".$tag_name."</a>";
@@ -393,7 +513,7 @@
 		
 		$buffer_index.="</h2>\n";
 	  }
-	  
+
 	  // Show galleries
 	  $buffer_index.="<table align=\"center\">\n";
 	  
