@@ -35,6 +35,10 @@
     $i=mkdir($conf["dir_thumbs"],0755);
     resultExe($i,"Creating thumbs directory: ".$conf["dir_thumbs"]);
 
+    // Create iotd directory
+    $i=mkdir(dirname($conf["file_ImageOfTheDay"]),0755);
+    resultExe($i,"Creating IOTD directory: ".dirname($conf["file_ImageOfTheDay"]));
+
     /**
      * Create static .htaccess
      **/
