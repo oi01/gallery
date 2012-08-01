@@ -307,6 +307,7 @@
 	 **/
 	$var_hidden=false;
 	$var_indexpic="";
+    $var_reverse=false;
 	$var_tags=array();
 
 	$info="";
@@ -348,6 +349,13 @@
 	  {
 	    debug("#index: ".$var["index"]);
 	    $var_indexpic=$var["index"];
+	  }
+
+	  // Reverse sort
+	  if (array_key_exists("reverse",$var))
+	  {
+	    debug("#reverse: ".$var["reverse"]);
+	    $var_reverse=$var["reverse"];
 	  }
 	  
  	  // Tags
@@ -416,6 +424,12 @@
 
     // Generate image codes
 	natsort($arr_pics);
+    if ($var_reverse)
+    {
+      // Reverse array
+      $arr_pics=array_reverse($arr_pics,true);
+    }
+
 	foreach($arr_pics as $pic)
 	{
 		$buffer_pics.="    <a class=\"oi01-gallery\" href=\"../".$conf["dir_pics"].$dir."/".$pic."\" title=\"".$pic."\"><img src=\"../".$conf["dir_thumbs"].$dir."/".$pic."\" /></a>\n";
