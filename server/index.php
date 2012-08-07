@@ -89,7 +89,7 @@
 	  if (substr($file,0,10)==$date_file)
 	  {
         // Move file from upload to gallery
-		$file_iotd=$file;
+		$file_iotd=getFilenameDate($file);
         rename(dirname($_SERVER["SCRIPT_FILENAME"])."/".$conf["dir_upload"].$file,dirname($_SERVER["SCRIPT_FILENAME"])."/".$conf["dir_ImageOfTheDay"].$file_iotd);
 
 		// Stop searching
@@ -114,7 +114,7 @@
 	  $file=$arr_pics[$r];
 
 	  // Move file from upload to gallery
-      $file_iotd=$file;
+      $file_iotd=getFilenameDate($file);
       rename(dirname($_SERVER["SCRIPT_FILENAME"])."/".$conf["dir_upload"].$file,dirname($_SERVER["SCRIPT_FILENAME"])."/".$conf["dir_ImageOfTheDay"].$file_iotd);
     }
 
@@ -169,6 +169,21 @@
   {
 	header("Location: ".$conf["file_install"]);
 	exit();
+  }
+
+  /**
+   * Generate new picture filename
+   */
+  function getFilenameDate($filename)
+  {
+    // Check if date is available
+    if (preg_match("/^[0-9]{4}-[0-9]{2}-[0-9]{2}/",$filename)==1)
+    {
+      return $filename;
+    }
+
+    // Return filename with current date
+    return date("Y-m-d")."_".$filename;
   }
 
   /**
