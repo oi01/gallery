@@ -2,6 +2,12 @@
 
 --- ChangeLog
 
+01.08.2012 [v1.2.0]
+- [#23] Added image of the day
+- [#17] Added a copyright image for the published pictures
+- [#27] Added reverse option in gallery
+- [#28] Fixed bug in showing active tag in color (IE only)
+
 21.06.2012 [v1.1.0]
 - [#12] Added pages at a defined number of galleries
 - [#4] Updated visual appearance of hidden galleries
