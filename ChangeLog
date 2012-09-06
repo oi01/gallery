@@ -2,10 +2,11 @@
 
 --- ChangeLog
 
-01.08.2012 [v1.2.0]
+06.09.2012 [v1.2.0]
 - [#23] Added image of the day
 - [#17] Added a copyright image for the published pictures
 - [#27] Added reverse option in gallery
+- [#24] Updated code to refresh cache of IOTD
 - [#28] Fixed bug in showing active tag in color (IE only)
 
 21.06.2012 [v1.1.0]
