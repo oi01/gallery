@@ -91,9 +91,10 @@
   // Show header
   print("<h1>Configuring...</h1>\n");
 
-  // Write IOTD first to have the currect file structure
+  // Write IOTD first to have the correct file structure
   if ($conf["is_ImageOfTheDay"])
   {
+    unlink($conf["dir_cache"]."Image_Of_The_Day.html");
     genIotd();
   }
 
