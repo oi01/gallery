@@ -17,9 +17,13 @@
   {
     global $icon_ok;
     global $icon_fail;
+    global $isExeInfo;
 
     $icon = ($res) ? $icon_ok : $icon_fail;
-    print("<p><img src=\"".$dir.$icon."\" /> ".$text."</p>\n");
+    if ($isExeInfo)
+    {
+      print("<p><img src=\"".$dir.$icon."\" /> ".$text."</p>\n");
+    }
   }
 
   /**
@@ -31,6 +35,7 @@
     global $conf;
     global $arr_topics;
     global $arr_count;
+    global $version_string;
 
     // Sort tags
     uksort($arr_tags, 'strnatcmp');
@@ -242,6 +247,8 @@
 
   /**
    * Create cache from name
+   *
+   * Returns true when directory is hidden otherwise false
    **/
   function createCache($dir_pics,$dir_thumbs,$dir_cache,$dir,$name,$write)
   {
@@ -428,12 +435,7 @@
     $file=$dir_cache.$name;
 	if ($write) file_put_contents($file,$buffer_file);
 
-    // Show link to hidden gallery
-    if ($var_hidden)
-    {
-      global $icon_link;
-      print("<p><img src=\"".$icon_link."\"> Link to hidden gallery: <a href=\"".$file."\" target=\"_blank\">".$dir."</a></p>\n");
-    }
+    return $var_hidden;
   }
 
   /**
@@ -460,7 +462,7 @@
   function debug($text)
   {
     global $conf;
-    if ($conf["is_debug"]) print("<!-- ".$text." -->");
+    if ($conf["is_debug"]) print("<!-- ".$text." -->\n");
   }
 
   /**
@@ -523,6 +525,7 @@
     global $conf;
     global $date_file;
     global $date_show;
+    global $version_string;
 
 	// Parse files
 	$arr_dirs=array();
@@ -598,7 +601,6 @@
 
 	// Show image
 	$buffer_file=file_get_contents($conf["file_iotd_tpl"]);
-    $buffer_file=str_replace("%index%",$buffer_index,$buffer_file);
 	$buffer_file=str_replace("%title%",$conf["text_title"],$buffer_file);
     $buffer_file=str_replace("%version%",$version_string,$buffer_file);
 	$buffer_file=str_replace("%date%",$date_show,$buffer_file);
@@ -618,10 +620,37 @@
 	$name.=".html";
 
     // Create cache for IOTD only
-    // createCache($conf["dir_pics"],$conf["dir_thumbs"],$conf["dir_cache"],$dir,$name,true);
+    //createCache($conf["dir_pics"],$conf["dir_thumbs"],$conf["dir_cache"],$dir,$name,true);
 
     // Remove IOTD index file
-    unlink($conf["dir_cache"].$name);
+    //unlink($conf["dir_cache"].$name);
+  }
+
+  /**
+   * Parse all directories and get an overview of the numbers of the images in each gallery
+   **/
+  function getOverview()
+  {
+    // Declare variables
+    global $conf;
+
+    // Pre-define variables
+    $arr_files=array();
+    $arr_dirs=array();
+
+    // Parse root
+    parse_dir($conf["dir_pics"],$arr_files,$arr_dirs);
+
+    // Check all directories
+    foreach($arr_dirs as $dir)
+    {
+      // Build path to cache file
+	  $name=str_replace(" ","_",$dir);
+	  $name.=".html";
+
+	  // Check if exists and write cache
+      createCache($conf["dir_pics"],$conf["dir_thumbs"],$conf["dir_cache"],$dir,$name,!file_exists($conf["dir_cache"].$name));
+    }
   }
 
 ?>

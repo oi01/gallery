@@ -63,6 +63,18 @@
 
 	// Generate IOTD
     genIotd();
+    unlink($conf["dir_cache"]."Image_Of_The_Day.html");
+    unlink($conf["file_index"]);
+
+    // Write new index file
+    getOverview();
+    $isExeInfo=false;
+    genIndex($arr_tags);
+    $isExeInfo=true;
+
+    // Show image of the day pages
+	header("Location: ".$conf["file_ImageOfTheDay"]);
+	exit();
   }
 
   // Check if software needs to be installed
@@ -75,24 +87,18 @@
   /**
    * Check for an updated cache
    **/
-  // Pre-define variables
-  $arr_files=array();
-  $arr_dirs=array();
 
-  // Parse original galleries
-  resultExe(true,"Parsing galleries: ".$conf["dir_pics"]);
-  parse_dir($conf["dir_pics"],$arr_files,$arr_dirs);
+  // Show header
+  print("<h1>Configuring...</h1>\n");
 
-  // Check all directories
-  foreach($arr_dirs as $dir)
+  // Write IOTD first to have the currect file structure
+  if ($conf["is_ImageOfTheDay"])
   {
-    // Build path to cache file
-	$name=str_replace(" ","_",$dir);
-	$name.=".html";
-
-	// Check if exists and write cache
-    createCache($conf["dir_pics"],$conf["dir_thumbs"],$conf["dir_cache"],$dir,$name,!file_exists($conf["dir_cache"].$name));
+    genIotd();
   }
+
+  // Get image information
+  getOverview();
 
   /**
    * Write an updated index

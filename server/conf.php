@@ -61,4 +61,7 @@
   $date_file=date("Y-m-d");
   $date_show=date("d.m.Y");
 
+  // Show exe info
+  $isExeInfo=true;
+
 ?>
