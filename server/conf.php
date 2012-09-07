@@ -34,7 +34,7 @@
   $conf["table_row"]=4;
   $conf["thumb_width"]=160;
   $conf["thumb_height"]=120;
-  $conf["is_debug"]=true;
+  $conf["is_debug"]=false;
   $conf["is_tags"]=true;
   $conf["is_ImageOfTheDay"]=false;
   $conf["text_title"]="oi01 - Gallery";
