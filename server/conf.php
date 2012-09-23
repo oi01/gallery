@@ -6,7 +6,7 @@
   $file_conf_global="etc/global.conf";
   
   $version_major=1;
-  $version_minor=2;
+  $version_minor=3;
   $version_fix=0;
   $version_string="v".$version_major.".".$version_minor.".".$version_fix;
 
