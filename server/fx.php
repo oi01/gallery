@@ -278,6 +278,9 @@
 	$im=null;
 	$file=null;
 
+    $latestpic_file=null;
+    $latestpic_time=0;
+
 	// Parse for files
 	parse_dir($dir_pics.$dir."/",$arr_files,$arr_dirs);
 
@@ -296,8 +299,18 @@
       // Flag as valid image
       if ($valid)
       {
+        // Add to valid images
         debug("- Status: valid");
 	    array_push($arr_pics,$file);
+
+        // Check date
+        $filetime = filemtime($dir_pics.$dir."/".$file);
+        if ($filetime>$latestpic_time)
+        {
+          // Set new latest pic
+          $latestpic_file=$file;
+          $latestpic_time=$filetime;
+        }
       }
       else
       {
@@ -345,8 +358,15 @@
 	  // Index picture
 	  if (array_key_exists("index",$var))
 	  {
-	    debug("#index: ".$var["index"]);
-	    $var_indexpic=$var["index"];
+        if ($var["index"]==="%latest%")
+        {
+          $var_indexpic=$latestpic_file;
+        }
+        else
+        {
+	      $var_indexpic=$var["index"];
+        }
+	    debug("#index: ".$var_indexpic);
 	  }
 
 	  // Reverse sort
