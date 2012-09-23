@@ -559,15 +559,9 @@
 	$arr_ext=array();
 	$file_iotd="";
 
-	// Init extensions
-    array_push($arr_ext,".jpg");
-	array_push($arr_ext,".png");
-	array_push($arr_ext,".gif");
-	array_push($arr_ext,".svg");
-
-	// Parse upload directory
+    // Check if image with same date already exists in IOTD directory
 	$conf["is_debug"]=false;
-	parse_dir($conf["dir_upload"],$arr_files,$arr_dirs);
+	parse_dir($conf["dir_pics"]."Image Of The Day/",$arr_files,$arr_dirs);
 	$conf["is_debug"]=true;
 
 	// Check for the daily image
@@ -576,43 +570,71 @@
 	  // Check for file with current date
 	  if (substr($file,0,10)==$date_file)
 	  {
-        // Move file from upload to gallery
-		$file_iotd=getFilenameDate($file);
-        rename(dirname($_SERVER["SCRIPT_FILENAME"])."/".$conf["dir_upload"].$file,dirname($_SERVER["SCRIPT_FILENAME"])."/".$conf["dir_ImageOfTheDay"].$file_iotd);
-
-		// Stop searching
-		break;
-	  }
-
-	  // Add image to array if file extension matches
-	  foreach($arr_ext as $extension)
-	  {
-	    if (strtolower(substr($file,-strlen($extension))) == $extension)
-		{
-		  array_push($arr_pics,$file);
-		  break;
-		}
-	  }
-	}
-
-	// None found, select image randomly
-	if ($file_iotd=="" && count($arr_pics)>0)
-	{
-	  $r=rand(0,count($arr_pics)-1);
-	  $file=$arr_pics[$r];
-
-	  // Move file from upload to gallery
-      $file_iotd=getFilenameDate($file);
-      rename(dirname($_SERVER["SCRIPT_FILENAME"])."/".$conf["dir_upload"].$file,dirname($_SERVER["SCRIPT_FILENAME"])."/".$conf["dir_ImageOfTheDay"].$file_iotd);
+        // Select file as IOTD file
+        $file_iotd=$file;
+      }
     }
 
-	// Check if still no image wants to be IOTD
-	if ($file_iotd=="")
-	{
-	  // Continue to gallery index
-      header("Location: ".$conf["dir_cache"]);
-	  exit();
-	}
+    // Check if IOTD does not exist for today
+    if ($file_iotd=="")
+    {
+      // Init extensions
+      array_push($arr_ext,".jpg");
+      array_push($arr_ext,".png");
+      array_push($arr_ext,".gif");
+      array_push($arr_ext,".svg");
+  
+      // Parse upload directory
+      $conf["is_debug"]=false;
+      $arr_dirs=array();
+      $arr_files=array();
+      parse_dir($conf["dir_upload"],$arr_files,$arr_dirs);
+      $conf["is_debug"]=true;
+  
+      // Check for the daily image
+      foreach($arr_files as $file)
+      {
+        // Check for file with current date
+        if (substr($file,0,10)==$date_file)
+        {
+          // Move file from upload to gallery
+          $file_iotd=getFilenameDate($file);
+          rename(dirname($_SERVER["SCRIPT_FILENAME"])."/".$conf["dir_upload"].$file,dirname($_SERVER["SCRIPT_FILENAME"])."/".$conf["dir_ImageOfTheDay"].$file_iotd);
+  
+         // Stop searching
+         break;
+       }
+  
+       // Add image to array if file extension matches
+       foreach($arr_ext as $extension)
+       {
+          if (strtolower(substr($file,-strlen($extension))) == $extension)
+          {
+            array_push($arr_pics,$file);
+            break;
+          }
+        }
+      }
+  
+      // None found, select image randomly
+      if ($file_iotd=="" && count($arr_pics)>0)
+      {
+        $r=rand(0,count($arr_pics)-1);
+        $file=$arr_pics[$r];
+  
+        // Move file from upload to gallery
+        $file_iotd=getFilenameDate($file);
+        rename(dirname($_SERVER["SCRIPT_FILENAME"])."/".$conf["dir_upload"].$file,dirname($_SERVER["SCRIPT_FILENAME"])."/".$conf["dir_ImageOfTheDay"].$file_iotd);
+      }
+  
+      // Check if still no image wants to be IOTD
+      if ($file_iotd=="")
+      {
+        // Continue to gallery index
+        header("Location: ".$conf["dir_cache"]);
+        exit();
+      }
+    }
 
 	// Show info if available
 	$info="";
