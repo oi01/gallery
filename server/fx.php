@@ -487,7 +487,7 @@
   function debug($text)
   {
     global $conf;
-    if ($conf["is_debug"]) print("<!-- ".$text." -->\n");
+    // if ($conf["is_debug"]===true) print("<!-- ".$text." -->\n");
   }
 
   /**
