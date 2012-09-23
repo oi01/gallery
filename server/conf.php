@@ -39,6 +39,7 @@
   $conf["is_ImageOfTheDay"]=false;
   $conf["text_title"]="oi01 - Gallery";
   $conf["text_home"]="Home";
+  $conf["sort_index"]="reverse";
 
   // Load optional global configuration file
   if (file_exists($file_conf_global))

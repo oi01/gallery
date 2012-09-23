@@ -51,7 +51,12 @@
 
       // Sort galleries
       usort($cur_tagdirs, 'strnatcmp');
-      $cur_tagdirs=array_reverse($cur_tagdirs);
+      
+      // Check for sorting
+      if ($conf["sort_index"]=="reverse")
+      {
+	    $cur_tagdirs=array_reverse($cur_tagdirs);
+      }
 
       // Prepare pages
       while($counter < sizeof($cur_tagdirs))
