@@ -20,7 +20,7 @@
     global $isExeInfo;
 
     $icon = ($res) ? $icon_ok : $icon_fail;
-    if ($isExeInfo)
+    if ($isExeInfo===true)
     {
       print("<p><img src=\"".$dir.$icon."\" /> ".$text."</p>\n");
     }
@@ -142,7 +142,7 @@
    
      	$buffer_index.="</table>\n";
    
-        // Generate names
+        // Generate filenames
         $ext_page_cur="";
         $ext_page_prev="";
         $ext_page_next="_".($page+1);
@@ -155,8 +155,8 @@
           if ($page==1) $ext_page_prev="";
         }
    
-     	  $file_out=$conf["dir_cache"]."index".$ext_page_cur.".html";
-     	  if ($cur_tag!="*")
+     	$file_out=$conf["dir_cache"]."index".$ext_page_cur.".html";
+     	if ($cur_tag!="*")
         {
           $file_out=$conf["dir_tags"].$cur_tag.$ext_page_cur.".html";
         }
@@ -620,9 +620,9 @@
 	// Update IOTD gallery
     // Build path to cache file
 	
-    $dir="Image Of The Day";
-	$name=str_replace(" ","_",$dir);
-	$name.=".html";
+    // $dir="Image Of The Day";
+	// $name=str_replace(" ","_",$dir);
+	// $name.=".html";
 
     // Create cache for IOTD only
     //createCache($conf["dir_pics"],$conf["dir_thumbs"],$conf["dir_cache"],$dir,$name,true);
