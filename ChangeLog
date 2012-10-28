@@ -2,6 +2,9 @@
 
 --- ChangeLog
 
+28.10.2012 [v1.3.1]
+- [#36] Updated showing IOTD to prevent bookmark redirection caches in browsers
+
 23.09.2012 [v1.3.0]
 - [#34] Hotfix: Debug messages break update
 - [#32] Added tag %latest% in gallery.conf to show the latest image as thumb
