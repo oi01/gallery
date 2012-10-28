@@ -56,7 +56,7 @@
 	  // Check date with current date
       if ($date_mod==$date_file)
 	  {
-        header("Location: ".$conf["file_ImageOfTheDay"]);
+        readfile($conf["file_ImageOfTheDay"]);
 	    exit();
 	  }
 	}
@@ -73,7 +73,7 @@
     $isExeInfo=true;
 
     // Show image of the day pages
-	header("Location: ".$conf["file_ImageOfTheDay"]);
+    readfile($conf["file_ImageOfTheDay"]);
 	exit();
   }
 

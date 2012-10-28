@@ -1,7 +1,7 @@
 <html>
 	<head>
 		<title>%title%</title>	
-		<link rel="stylesheet" type="text/css" href="../style.css">
+		<link rel="stylesheet" type="text/css" href="style.css">
 	</head>
 	<body>
 	    <h1>Image Of The Day &gt; %date%</h1>

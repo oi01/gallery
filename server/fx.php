@@ -652,9 +652,9 @@
     $buffer_file=str_replace("%version%",$version_string,$buffer_file);
 	$buffer_file=str_replace("%date%",$date_show,$buffer_file);
 	$buffer_file=str_replace("%info%",$info,$buffer_file);
-	$buffer_file=str_replace("%archive%","../".$conf["dir_cache"]."Image_Of_The_Day.html",$buffer_file);
-	$buffer_file=str_replace("%gallery%","../".$conf["dir_cache"],$buffer_file);
-	$buffer_file=str_replace("%iotd%","../".$conf["dir_ImageOfTheDay"].$file_iotd,$buffer_file);
+	$buffer_file=str_replace("%archive%",$conf["dir_cache"]."Image_Of_The_Day.html",$buffer_file);
+	$buffer_file=str_replace("%gallery%",$conf["dir_cache"],$buffer_file);
+	$buffer_file=str_replace("%iotd%",$conf["dir_ImageOfTheDay"].$file_iotd,$buffer_file);
 
 	// Save file
     $i=file_put_contents($conf["file_ImageOfTheDay"],$buffer_file);
