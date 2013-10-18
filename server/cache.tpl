@@ -3,6 +3,7 @@
 	    <title>oi01 - Gallery</title>
 	    <link rel="stylesheet" type="text/css" href="../style.css">
 		<link rel="stylesheet" type="text/css" href="../shadowbox/shadowbox.css">
+		<meta name="viewport" content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, width=device-width">
 		<script type="text/javascript" src="../shadowbox/shadowbox.js"></script>
 		<script type="text/javascript">
 			function setup()

@@ -10,6 +10,20 @@ img {
   border: 1px solid #000000;
 }
 
+/* Block images for small displays */
+@media only screen and (max-width: 480px) and (max-width: 640px)
+{
+	img
+	{
+        display: block;
+		max-width: 100%;
+    }
+
+	table
+	{
+		max-width: 100%;
+	}
+}
 /* Normal link */
 a:link {
   color: #000000;

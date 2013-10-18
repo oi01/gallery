@@ -2,6 +2,7 @@
 	<head>
 		<title>%title%</title>	
 		<link rel="stylesheet" type="text/css" href="../style.css">
+		<meta name="viewport" content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, width=device-width">
 	</head>
 	<body>
 	    <h1><a href="../index/">%home%</a></h1>
