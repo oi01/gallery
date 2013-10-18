@@ -447,7 +447,84 @@
 
 	foreach($arr_pics as $pic)
 	{
-		$buffer_pics.="    <a class=\"oi01-gallery\" href=\"../".$conf["dir_pics"].$dir."/".$pic."\" title=\"".$pic."\"><img src=\"../".$conf["dir_thumbs"].$dir."/".$pic."\" /></a>\n";
+        $tooltip="";
+		
+		$exif_make="";
+		$exif_model="";
+		$exif_exposure="";
+		$exif_iso="";
+		$exif_focal="";
+		$exif_aperture="";
+		$exif_comments="";
+
+		$exif = exif_read_data($conf["dir_pics"].$dir."/".$pic, 'IFD0');
+		if ($exif!==false)
+        {
+			$exif=exif_read_data($conf["dir_pics"].$dir."/".$pic, 0, true);
+			$tooltip="";
+			foreach ($exif as $key => $section) {
+				foreach ($section as $attr => $val) {
+					if ($key=="IFD0")
+					{
+						if ($attr=="Make") $exif_make=$val;
+						if ($attr=="Model") $exif_model=$val;
+						if ($attr=="Comments") $exif_comments=$val;
+					}
+					else if ($key=="EXIF")
+					{
+						if ($attr=="ExposureTime")
+						{
+							$a=split("/",$val);
+							$a1=intval($a[0]);
+							$a2=intval($a[1]);
+                            if ($a2 % 10 == 9)
+                            {
+								$exif_exposure="HDR";
+							}
+							else
+							{
+								$exif_exposure=$val;
+							}
+						}
+						if ($attr=="ISOSpeedRatings") $exif_iso=$val;
+						// if ($attr=="Flash") $tooltip.="Flash: ".$val."\n"; -->
+						if ($attr=="FocalLength")
+						{
+							$a=split("/",$val);
+							$a1=intval($a[0]);
+							$a2=intval($a[1]);
+                            if ($a1!=0 && $a2!=0)
+                            {
+								$v=$a1/$a2;
+								$exif_focal=$v;
+							}
+							else
+							{
+								$exif_focal=$val;
+							}
+						}
+					}
+					else if ($key=="COMPUTED")
+					{
+						if ($attr=="ApertureFNumber") $exif_aperture=$val;
+					}
+				}
+			}
+        }
+		if ($exif_make!="" || $exif_model!="" || $exif_exposure!="" || $exif_iso!="" || $exif_focal!="" || $exif_aperture!="")
+		{
+			$a=array();
+			if ($exif_make!="") array_push($a,"Camera: ".$exif_make." ".$exif_model);
+			if ($exif_aperture!="") array_push($a,"Aperture: ".$exif_aperture);
+			$e="s";
+			if ($exif_exposure=="HDR") $e="";
+			if ($exif_exposure!="") array_push($a,"Exposure: ".$exif_exposure.$e);
+			if ($exif_focal!="") array_push($a,"Focal Length: ".$exif_focal."mm");
+			if ($exif_iso!="") array_push($a,"ISO: ".$exif_iso);
+			$tooltip=join("\n",$a);
+		}
+
+		$buffer_pics.="    <a class=\"oi01-gallery\" href=\"../".$conf["dir_pics"].$dir."/".$pic."\" title=\"".$tooltip."\" title2=\"".$exif_comments."\"><img src=\"../".$conf["dir_thumbs"].$dir."/".$pic."\" /></a>\n";
 	}
 
     // Create template
