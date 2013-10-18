@@ -2,6 +2,11 @@
 
 --- ChangeLog
 
+18.10.2013 [v1.3.2]
+- Added attribute title2 for showing enlarged image
+- Updated support for mobile phones
+- [#37] Added EXIF Information
+
 28.10.2012 [v1.3.1]
 - [#36] Updated showing IOTD to prevent bookmark redirection caches in browsers
 
